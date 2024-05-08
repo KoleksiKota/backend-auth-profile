@@ -34,6 +34,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.postgresql:postgresql")
+    implementation("org.springframework.security:spring-security-config:5.3.0.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("javax.mail:javax.mail-api:1.6.2")
+    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+
 }
 
 tasks.register<Test>("unitTest") {

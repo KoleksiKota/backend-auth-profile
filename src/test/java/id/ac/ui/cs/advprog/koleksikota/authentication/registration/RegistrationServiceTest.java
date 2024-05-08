@@ -3,6 +3,7 @@ package id.ac.ui.cs.advprog.koleksikota.authentication.registration;
 import id.ac.ui.cs.advprog.koleksikota.authentication.appuser.AppUser;
 import id.ac.ui.cs.advprog.koleksikota.authentication.appuser.AppUserRole;
 import id.ac.ui.cs.advprog.koleksikota.authentication.appuser.AppUserService;
+import id.ac.ui.cs.advprog.koleksikota.authentication.email.EmailSender;
 import id.ac.ui.cs.advprog.koleksikota.authentication.registration.token.ConfirmationToken;
 import id.ac.ui.cs.advprog.koleksikota.authentication.registration.token.ConfirmationTokenService;
 import org.junit.jupiter.api.Test;

@@ -25,7 +25,7 @@ public class RegistrationControllerTest {
     @Test
     public void itShouldRegisterUser() throws Exception {
         // Given
-        RegistrationRequest request = new RegistrationRequest("test@test.com", "password", "test");
+        RegistrationRequest request = new RegistrationRequest("rifda", "aulia", "test@gmail.com", "password");
 
         // When
         Mockito.when(registrationService.register(request)).thenReturn("User registered");
