@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.koleksikota.authentication.registration;
+package id.ac.ui.cs.advprog.koleksikota.authentication.registration.token;
 
 import id.ac.ui.cs.advprog.koleksikota.authentication.appuser.AppUser;
 import id.ac.ui.cs.advprog.koleksikota.authentication.registration.token.ConfirmationToken;

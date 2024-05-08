@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.koleksikota.authentication.registration.token;
 
-import id.ac.ui.cs.advprog.koleksikota.authentication.registration.token.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
