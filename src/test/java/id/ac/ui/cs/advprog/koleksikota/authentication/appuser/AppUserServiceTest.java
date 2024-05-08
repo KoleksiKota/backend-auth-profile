@@ -1,9 +1,11 @@
 package id.ac.ui.cs.advprog.koleksikota.authentication.appuser;
 
+import id.ac.ui.cs.advprog.koleksikota.authentication.registration.token.ConfirmationTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
