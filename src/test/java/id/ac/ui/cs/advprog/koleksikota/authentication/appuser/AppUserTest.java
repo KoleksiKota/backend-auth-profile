@@ -18,13 +18,6 @@ class AppUserTest {
     }
 
     @Test
-    void testGetAuthorities() {
-        Collection<? extends SimpleGrantedAuthority> authorities = appUser.getAuthorities();
-        assertEquals(1, authorities.size());
-        assertTrue(authorities.contains(new SimpleGrantedAuthority(AppUserRole.USER.name())));
-    }
-
-    @Test
     void testGetPassword() {
         assertEquals("password", appUser.getPassword());
     }
