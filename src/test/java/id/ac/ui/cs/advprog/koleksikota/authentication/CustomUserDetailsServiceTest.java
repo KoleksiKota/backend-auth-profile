@@ -1,6 +1,8 @@
 package id.ac.ui.cs.advprog.koleksikota.authentication;
 
+import id.ac.ui.cs.advprog.koleksikota.authentication.model.User;
 import id.ac.ui.cs.advprog.koleksikota.authentication.repository.UserRepository;
+import id.ac.ui.cs.advprog.koleksikota.authentication.service.CustomUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
