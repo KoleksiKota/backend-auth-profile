@@ -34,12 +34,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.postgresql:postgresql")
-    implementation("org.springframework.security:spring-security-config:5.3.0.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("javax.mail:javax.mail-api:1.6.2")
     implementation("org.springframework.boot:spring-boot-starter-logging")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
-
+    implementation("org.webjars:jquery:3.4.1")
+    implementation("org.webjars:bootstrap:4.3.1")
+    implementation("org.webjars:webjars-locator-core")
 }
 
 tasks.register<Test>("unitTest") {
