@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,7 +22,8 @@ public class CustomUserDetailsServiceTest {
     @BeforeEach
     public void setUp() {
         mockUserRepo = Mockito.mock(UserRepository.class);
-        userDetailsService = new CustomUserDetailsService(mockUserRepo);
+        userDetailsService = new CustomUserDetailsService();
+        ReflectionTestUtils.setField(userDetailsService, "userRepo", mockUserRepo);
     }
 
     @Test
