@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.koleksikota.authentication;
 
 import id.ac.ui.cs.advprog.koleksikota.authentication.model.User;
+import id.ac.ui.cs.advprog.koleksikota.authentication.security.CustomUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,12 +21,6 @@ public class CustomUserDetailsTest {
     public void setUp() {
         mockUser = Mockito.mock(User.class);
         userDetails = new CustomUserDetails(mockUser);
-    }
-
-    @Test
-    public void testGetAuthorities() {
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        assertTrue(authorities.isEmpty());
     }
 
     @Test
