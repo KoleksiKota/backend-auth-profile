@@ -41,6 +41,8 @@ dependencies {
     implementation("org.webjars:jquery:3.4.1")
     implementation("org.webjars:bootstrap:4.3.1")
     implementation("org.webjars:webjars-locator-core")
+    implementation("org.springframework.boot:spring-boot-starter-actuator:3.2.5")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus:1.12.5")
 }
 
 tasks.register<Test>("unitTest") {
