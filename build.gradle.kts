@@ -38,11 +38,20 @@ dependencies {
     implementation("javax.mail:javax.mail-api:1.6.2")
     implementation("org.springframework.boot:spring-boot-starter-logging")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
-    implementation("org.webjars:jquery:3.4.1")
-    implementation("org.webjars:bootstrap:4.3.1")
     implementation("org.webjars:webjars-locator-core")
     implementation("org.springframework.boot:spring-boot-starter-actuator:3.2.5")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus:1.12.5")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    runtimeOnly("org.postgresql:postgresql")
+    compileOnly("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("com.h2database:h2:2.1.214")
+    testImplementation("junit:junit")
 }
 
 tasks.register<Test>("unitTest") {
