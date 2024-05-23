@@ -1,11 +1,13 @@
 package id.ac.ui.cs.advprog.koleksikota.authentication.controllers;
 
+import id.ac.ui.cs.advprog.koleksikota.authentication.dto.AuthResponseDTO;
 import id.ac.ui.cs.advprog.koleksikota.authentication.dto.LoginDto;
 import id.ac.ui.cs.advprog.koleksikota.authentication.dto.RegisterDto;
 import id.ac.ui.cs.advprog.koleksikota.authentication.models.Role;
 import id.ac.ui.cs.advprog.koleksikota.authentication.models.UserEntity;
 import id.ac.ui.cs.advprog.koleksikota.authentication.repository.RoleRepository;
 import id.ac.ui.cs.advprog.koleksikota.authentication.repository.UserRepository;
+import id.ac.ui.cs.advprog.koleksikota.authentication.security.JWTGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +32,24 @@ public class AuthController {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
+    private JWTGenerator jwtGenerator;
+
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder){
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User log in success", HttpStatus.OK);
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
 
     @PostMapping("register")
