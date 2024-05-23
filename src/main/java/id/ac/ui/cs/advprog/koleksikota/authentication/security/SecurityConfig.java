@@ -23,10 +23,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private CustomUserDetailService userDetailService;
+    private CustomUserDetailsService userDetailService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailService userDetailService) {
+    public SecurityConfig(CustomUserDetailsService userDetailService) {
         this.userDetailService = userDetailService;
     }
 
@@ -35,7 +35,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET).authenticated()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());

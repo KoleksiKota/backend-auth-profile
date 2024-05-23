@@ -17,18 +17,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
 
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository){
+    public CustomUserDetailsService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findbyUsername(username).orElseThrow(() -> new UsernameNotFoundException("username not found"));
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username not found"));
         return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
