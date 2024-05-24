@@ -29,13 +29,21 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getJWTFromRequest(request);
+        if (StringUtils.hasText(token)) {
+            logger.info("Token found: " + token);
+        } else {
+            logger.info("No token found");
+        }
         if (StringUtils.hasText(token) && tokenGenerator.validateToken(token) && !tokenBlacklist.contains(token)) {
             String username = tokenGenerator.getUsernameFromJWT(token);
+            logger.info("Token valid for username: " + username);
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        } else {
+            logger.info("Token invalid or blacklisted");
         }
         filterChain.doFilter(request, response);
     }

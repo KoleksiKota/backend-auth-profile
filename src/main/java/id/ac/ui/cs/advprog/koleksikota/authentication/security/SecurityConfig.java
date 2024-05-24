@@ -57,8 +57,8 @@ public class SecurityConfig {
                         })
                         .addLogoutHandler(logoutHandler())
                         .clearAuthentication(true)
-                        .invalidateHttpSession(true));
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                        .invalidateHttpSession(true))
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
