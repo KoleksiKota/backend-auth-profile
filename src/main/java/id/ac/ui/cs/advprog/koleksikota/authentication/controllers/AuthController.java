@@ -8,6 +8,8 @@ import id.ac.ui.cs.advprog.koleksikota.authentication.models.UserEntity;
 import id.ac.ui.cs.advprog.koleksikota.authentication.repository.RoleRepository;
 import id.ac.ui.cs.advprog.koleksikota.authentication.repository.UserRepository;
 import id.ac.ui.cs.advprog.koleksikota.authentication.security.JWTGenerator;
+import id.ac.ui.cs.advprog.koleksikota.authentication.security.TokenBlacklist;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,4 +71,19 @@ public class AuthController {
 
         return new ResponseEntity<>("User registered success", HttpStatus.OK);
     }
+
+    @Autowired
+    private TokenBlacklist tokenBlacklist;
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            tokenBlacklist.add(token);
+        }
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("User logged out successfully");
+    }
+
 }
