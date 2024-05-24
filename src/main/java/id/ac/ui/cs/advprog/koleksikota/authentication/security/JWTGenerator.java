@@ -47,7 +47,8 @@ public class JWTGenerator {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
-            throw new AuthenticationCredentialsNotFoundException("JWT was exprired or incorrect",ex.fillInStackTrace());
+            System.err.println("Token validation error: " + ex.getMessage());
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect", ex);
         }
     }
 

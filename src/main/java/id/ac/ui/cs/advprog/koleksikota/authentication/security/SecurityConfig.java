@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/profile/**").authenticated()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .logout(logout -> logout
@@ -56,8 +57,8 @@ public class SecurityConfig {
                         })
                         .addLogoutHandler(logoutHandler())
                         .clearAuthentication(true)
-                        .invalidateHttpSession(true));
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                        .invalidateHttpSession(true))
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
