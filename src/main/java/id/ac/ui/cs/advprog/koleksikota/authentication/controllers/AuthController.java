@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
 import java.util.Collections;
 
 @RestController
@@ -56,13 +55,28 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        if(userRepository.existsByUsername(registerDto.getUsername())){
+        String username = registerDto.getUsername();
+        String password = registerDto.getPassword();
+
+        if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+            return new ResponseEntity<>("Username dan password tidak boleh kosong", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!username.matches("[a-zA-Z0-9_.]+")) {
+            return new ResponseEntity<>("Username hanya boleh berisi huruf, angka, underscore, dan titik", HttpStatus.BAD_REQUEST);
+        }
+
+        if (password.length() < 8) {
+            return new ResponseEntity<>("Password harus memiliki panjang minimal 8 karakter", HttpStatus.BAD_REQUEST);
+        }
+
+        if(userRepository.existsByUsername(username)){
             return new ResponseEntity<>("Username is taken", HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = new UserEntity();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
 
         Role roles = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(roles));
