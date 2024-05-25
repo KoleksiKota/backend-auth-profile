@@ -26,7 +26,7 @@ public class UserProfileService {
         return userProfileRepository.save(userProfile);
     }
 
-    public UserProfile getUserProfile(int id) {
-        return userProfileRepository.findById(id).orElse(null);
+    public UserProfile getUserProfileByUsername(String username) {
+        return userProfileRepository.findByUser_Username(username).orElse(null);
     }
 }

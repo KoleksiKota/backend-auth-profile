@@ -31,9 +31,11 @@ public class UserProfileController {
 
     @GetMapping("/{username}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable String username){
-        return userRepository.findByUsername(username).map(user -> {
-            UserProfile userProfile = userProfileService.getUserProfile(user.getId());
+        UserProfile userProfile = userProfileService.getUserProfileByUsername(username);
+        if (userProfile != null) {
             return new ResponseEntity<>(userProfile, HttpStatus.OK);
-        }).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
