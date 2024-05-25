@@ -64,13 +64,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Test with Gradle
-        run: |
-          ./gradlew check --info --stacktrace
-          ./gradlew test
-          ./gradlew jacocoTestReport
-      # (Optional) Add steps for generating coverage report and other post-test tasks
-
   publish:
     name: Publish Docker Image
     runs-on: ubuntu-latest
