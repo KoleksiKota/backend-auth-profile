@@ -52,6 +52,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("com.h2database:h2:2.1.214")
     testImplementation("junit:junit")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 }
 
 tasks.register<Test>("unitTest") {
