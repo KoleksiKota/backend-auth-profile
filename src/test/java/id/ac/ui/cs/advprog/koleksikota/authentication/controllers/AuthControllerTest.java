@@ -23,6 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.lang.reflect.Field;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,8 +55,13 @@ class AuthControllerTest {
     private AuthController authController;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
+
+        // Use reflection to set the private tokenBlacklist field
+        Field tokenBlacklistField = AuthController.class.getDeclaredField("tokenBlacklist");
+        tokenBlacklistField.setAccessible(true);
+        tokenBlacklistField.set(authController, tokenBlacklist);
     }
 
     @Test
@@ -111,5 +118,18 @@ class AuthControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Password harus memiliki panjang minimal 8 karakter", response.getBody());
+    }
+
+    @Test
+    void testLogout() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getHeader("Authorization")).thenReturn("Bearer testToken");
+
+        ResponseEntity<String> response = authController.logout(request);
+
+        verify(tokenBlacklist, times(1)).add("testToken");
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("User logged out successfully", response.getBody());
+        verify(request, times(1)).getHeader("Authorization");
     }
 }
