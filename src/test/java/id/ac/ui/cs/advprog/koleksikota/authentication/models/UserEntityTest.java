@@ -29,4 +29,28 @@ class UserEntityTest {
         assertEquals("password", user.getPassword());
         assertEquals(roles, user.getRoles());
     }
+
+    @Test
+    void testEqualsAndHashCode() {
+        UserEntity user1 = new UserEntity();
+        user1.setId(1);
+        user1.setUsername("testuser");
+
+        UserEntity user2 = new UserEntity();
+        user2.setId(1);
+        user2.setUsername("testuser");
+
+        assertEquals(user1, user2);
+        assertEquals(user1.hashCode(), user2.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        UserEntity user = new UserEntity();
+        user.setId(1);
+        user.setUsername("testuser");
+
+        String expectedToString = "UserEntity(id=1, username=testuser, password=null, roles=[])";
+        assertEquals(expectedToString, user.toString());
+    }
 }
