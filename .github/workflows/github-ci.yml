@@ -63,7 +63,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
+
       - name: Test with Gradle
         run: |
           ./gradlew check --info --stacktrace
