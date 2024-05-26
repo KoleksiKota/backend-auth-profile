@@ -6,6 +6,14 @@ plugins {
     id("org.sonarqube") version "4.4.1.3373"
 }
 
+sonar {
+    properties {
+        property("sonar.projectKey", "KoleksiKota_backend-auth-profile")
+        property("sonar.organization", "koleksikota")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
 
 group = "id.ac.ui.cs.advprog.koleksikota"
 version = "0.0.1-SNAPSHOT"
@@ -59,21 +67,41 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 }
 
-tasks.register<Test>("unitTest") {
-    description = "Runs unit tests."
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it) { exclude("**/*Application**") }
+    }))
+    dependsOn(tasks.test) // tests are required to run before generating the report
+    reports {
+        xml.required.set(false)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
+
+tasks.register<Test>("unitTest"){
+    description = "Runs unit test."
     group = "verification"
 
-    filter {
+    filter{
         excludeTestsMatching("*FunctionalTest")
     }
 }
 
-tasks.register<Test>("functionalTest") {
-    description = "Runs functional tests."
+tasks.register<Test>("functionalTest"){
+    description = "Runs functional test."
     group = "verification"
 
-    filter {
-        includeTestsMatching("*FunctionalTest")
+    filter{
+        excludeTestsMatching("*FunctionalTest")
     }
 }
 
@@ -91,9 +119,9 @@ tasks.test {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+
     reports {
-        xml.required.set(true)
-        csv.required.set(true)
-        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+        html.required = true
+        xml.required = true
     }
 }
